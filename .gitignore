@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# Node / Bun / TypeScript
+node_modules/
+.pnpm-store/
+*.log
+.next/
+.vercel/
+.turbo/
+*.tsbuildinfo
+bun.lockb
+
+# Rust / Go
+target/
+*.rs.bk
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+
+# Test / build artifacts
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Local-only Claude / settings
+.claude/settings.local.json
