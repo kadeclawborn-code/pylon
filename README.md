@@ -8,7 +8,7 @@ Pylon is fictional. Every customer, employee, codebase, and event is synthetic. 
 
 ## Status
 
-🚧 **Early scaffolding.** Tier 0 (the minimum viable substrate) is being built as a series of public POCs by [Bent Wire Studio](https://github.com/kade-clawborn/bentwire). Watch for the first releases under `v0.1.0`.
+🚧 **Early scaffolding.** Tier 0 (the minimum viable substrate) is being built as a series of public POCs by [Bent Wire Studio](https://github.com/kadeclawborn-code/bentwire). Watch for the first releases under `v0.1.0`.
 
 ## What's here vs. what's coming
 
@@ -18,7 +18,7 @@ See [`BLUEPRINT.md`](./BLUEPRINT.md) for the full design — what Pylon is, why 
 
 - [`BLUEPRINT.md`](./BLUEPRINT.md) — full design and roadmap (read first)
 - [`CLAUDE.md`](./CLAUDE.md) — agent conventions for working in this repo
-- [Bent Wire Studio](https://github.com/kade-clawborn/bentwire) — the AI-experimentation studio building Pylon
+- [Bent Wire Studio](https://github.com/kadeclawborn-code/bentwire) — the AI-experimentation studio building Pylon
 
 ## License
 

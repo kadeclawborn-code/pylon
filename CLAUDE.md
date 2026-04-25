@@ -1,6 +1,6 @@
 # CLAUDE.md — Pylon Repo
 
-You are working inside [`kade-clawborn/pylon`](https://github.com/kade-clawborn/pylon) — a synthetic B2B SaaS company being built as an open-source AI agent testbed by [Bent Wire Studio](https://github.com/kade-clawborn/bentwire).
+You are working inside [`kadeclawborn-code/pylon`](https://github.com/kadeclawborn-code/pylon) — a synthetic B2B SaaS company being built as an open-source AI agent testbed by [Bent Wire Studio](https://github.com/kadeclawborn-code/bentwire).
 
 ## On entry, always
 
@@ -66,8 +66,8 @@ This repo is **public from day 1**. Don't put anything here that wouldn't be saf
 | In this repo | NOT in this repo |
 |---|---|
 | Pylon's fictional artifacts (org, product, tickets, code, customers, support, marketing, finance) | Bent Wire's agent identity files (those are in `~/.paperclip/...`) |
-| Pylon's product code (under `codebases/`) | Bent Wire's POC build process (that's `kade-clawborn/bentwire-playground`) |
-| The runnable spin-up (Makefile, docker-compose) | Bent Wire studio charter and operating docs (`kade-clawborn/bentwire`) |
+| Pylon's product code (under `codebases/`) | Bent Wire's POC build process (that's `kadeclawborn-code/bentwire-playground`) |
+| The runnable spin-up (Makefile, docker-compose) | Bent Wire studio charter and operating docs (`kadeclawborn-code/bentwire`) |
 | BLUEPRINT.md, README.md, this file | Anything Bent Wire-internal |
 
 ## When in doubt
@@ -78,7 +78,7 @@ This repo is **public from day 1**. Don't put anything here that wouldn't be saf
 
 ## What you NEVER do here
 
-- Push to a non-Pylon remote (this repo only goes to `kade-clawborn/pylon`)
+- Push to a non-Pylon remote (this repo only goes to `kadeclawborn-code/pylon`)
 - Commit on `main` directly (always work on `poc/<slug>`)
 - Generate "Acme Corp"-style fixtures (Pylon is the company, no nested fakes)
 - Reference Bent Wire Studio in Pylon's public-facing artifacts (Pylon should appear standalone — Bent Wire is in BLUEPRINT.md and README.md only as the project's origin/maintainer footer)

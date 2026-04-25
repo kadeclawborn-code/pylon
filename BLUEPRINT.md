@@ -14,7 +14,7 @@ Most AI agent demos use disconnected fixtures: a few mock tickets, a stub repo, 
 
 Pylon fills that gap. It models a real company across product, engineering, marketing, sales, support, finance, ops, security, and compliance — with the artifacts in each layer referring to each other consistently. An AI tool tested against Pylon gets a real-feeling enterprise to reason over.
 
-For [Bent Wire Studio](https://github.com/kade-clawborn/bentwire) (the AI-experimentation studio building this), Pylon serves three purposes:
+For [Bent Wire Studio](https://github.com/kadeclawborn-code/bentwire) (the AI-experimentation studio building this), Pylon serves three purposes:
 
 1. **Substrate** — every Bent Wire POC runs against Pylon's data
 2. **Coherence** — POCs can chain: a release-notes POC consumes the same PR history that a security-review POC scanned earlier
@@ -184,7 +184,7 @@ This three-layer design is critical: static fixtures teach AI tools different le
 | | Bent Wire Studio | Pylon LLC |
 |---|---|---|
 | What | The AI-experimentation studio | The synthetic B2B SaaS testbed |
-| Repo | [`kade-clawborn/bentwire`](https://github.com/kade-clawborn/bentwire) | this repo (`kade-clawborn/pylon`) |
+| Repo | [`kadeclawborn-code/bentwire`](https://github.com/kadeclawborn-code/bentwire) | this repo (`kadeclawborn-code/pylon`) |
 | Paperclip company ID | `cffe8772-545c-427d-8b96-561109c8343e` | none initially; possibly its own company at Tier 2 |
 | Agents | CEO, IntakeLead, ResearchLead, EngineeringLead, MarketAnalyst, Critic, PrototypeEngineer, TestEngineer, CommsLead, TechScout, CommunityScout | none initially; Bent Wire's agents produce all Pylon artifacts |
 | Public output | Open-source POCs + Medium/LinkedIn posts | Pylon itself (this repo) is the publish artifact |
@@ -222,7 +222,7 @@ The first 100 tickets should feel real (varied, messy, with realistic context wi
 ### What lives here vs. elsewhere
 - This repo: source-of-truth fixtures, codebases, runnable spin-up
 - The product's *own* git history: lives inside `codebases/<service>/.git/` (subrepos have their own histories)
-- Bent Wire's POC build process: lives in [`kade-clawborn/bentwire-playground`](https://github.com/kade-clawborn/bentwire-playground), not here
+- Bent Wire's POC build process: lives in [`kadeclawborn-code/bentwire-playground`](https://github.com/kadeclawborn-code/bentwire-playground), not here
 - Bent Wire's agent definitions: live in `~/.paperclip/instances/default/companies/cffe8772-.../agents/`, not here
 
 ## Open questions (decide as we build)
