@@ -1,0 +1,20 @@
+{
+  "$comment": "Pylon engineering sprints, 2-week cadence. Sprint dates Mon → Sun. Pylon practices a 'no Friday merges' policy company-wide.",
+  "current_sprint": "S14",
+  "sprints": [
+    { "id": "S1", "start": "2025-10-13", "end": "2025-10-26", "theme": "Switchyard hardening (post-Q3 incident)", "status": "completed" },
+    { "id": "S2", "start": "2025-10-27", "end": "2025-11-09", "theme": "GitLab Cloud integration (kickoff)", "status": "completed" },
+    { "id": "S3", "start": "2025-11-10", "end": "2025-11-23", "theme": "GitLab webhook ingest", "status": "completed" },
+    { "id": "S4", "start": "2025-11-24", "end": "2025-12-07", "theme": "GitLab MR comment posting", "status": "completed" },
+    { "id": "S5", "start": "2025-12-08", "end": "2025-12-21", "theme": "Audit logs kickoff", "status": "completed" },
+    { "id": "S6", "start": "2025-12-22", "end": "2026-01-04", "theme": "Holiday window (light load)", "status": "completed", "notes": "Reduced scope due to PTO; on-call only for production issues, plus Beacon Marketplace foundation work for those around" },
+    { "id": "S7", "start": "2026-01-05", "end": "2026-01-18", "theme": "Beacon Marketplace data model", "status": "completed" },
+    { "id": "S8", "start": "2026-01-19", "end": "2026-02-01", "theme": "Async rule pack research + audit logs UI", "status": "completed" },
+    { "id": "S9", "start": "2026-02-02", "end": "2026-02-15", "theme": "Tower team comparison kickoff + Pylon Suggest research", "status": "completed" },
+    { "id": "S10", "start": "2026-02-16", "end": "2026-03-01", "theme": "Audit logs polish + Marketplace publishing UX", "status": "completed" },
+    { "id": "S11", "start": "2026-03-02", "end": "2026-03-15", "theme": "Audit logs GA + GitLab MR analyzer integration", "status": "completed" },
+    { "id": "S12", "start": "2026-03-16", "end": "2026-03-29", "theme": "Beacon Marketplace public preview", "status": "completed" },
+    { "id": "S13", "start": "2026-03-30", "end": "2026-04-12", "theme": "GitLab GA push + Marketplace post-launch fixes", "status": "completed" },
+    { "id": "S14", "start": "2026-04-13", "end": "2026-04-26", "theme": "GitLab GA + Tower team comparison push", "status": "in_progress" }
+  ]
+}
