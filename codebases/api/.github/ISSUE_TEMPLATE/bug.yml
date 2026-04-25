@@ -1,0 +1,45 @@
+name: Bug report
+description: Report a bug in the Pylon API
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: One paragraph describing the unexpected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Repro steps
+      description: Minimal steps to reproduce. Include diff/payload if relevant.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - urgent (production impact)
+        - high (blocks a release)
+        - medium (annoying but not blocking)
+        - low (paper-cut)
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: e.g. Pylon API v2.4.2, Python 3.12.4, customer org
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / traceback
+      render: shell

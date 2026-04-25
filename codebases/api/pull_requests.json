@@ -1,0 +1,403 @@
+[
+  {
+    "number": 14, "title": "feat(switchyard): hardening pass post-Q3 incident",
+    "state": "merged", "author": "ravi", "merged_by": "priya",
+    "base": "main", "head": "feat/switchyard-hardening",
+    "created_at": "2025-10-21T11:00:00Z", "merged_at": "2025-10-26T18:00:00Z",
+    "additions": 412, "deletions": 87, "files_changed": 9,
+    "reviewers": ["priya", "jordan"], "approvals": 2, "request_changes": 0,
+    "labels": ["switchyard", "infra"],
+    "body": "Hardening for Switchyard: structured retries, dead-letter queue, latency p95 instrumentation. Closes #28. Refs PYL-... (no specific ticket; this was the Q3 incident response action item).",
+    "review_comments": [
+      { "author": "priya", "at": "2025-10-23T10:30:00Z", "body": "The retry-budget config is hardcoded; let's parameterize via env so we can tune per-environment without redeploy." },
+      { "author": "ravi", "at": "2025-10-23T11:14:00Z", "body": "Good call. Pulling out PYLON_RETRY_MAX_ATTEMPTS + PYLON_RETRY_BACKOFF_BASE_MS." },
+      { "author": "jordan", "at": "2025-10-24T15:00:00Z", "body": "Approving. Two follow-up tickets filed for the latency instrumentation breakouts I'd like to see (#31 and the Datadog dashboard work)." }
+    ]
+  },
+  {
+    "number": 18, "title": "fix(switchyard): re-register webhooks on GitHub App reinstall",
+    "state": "merged", "author": "jordan", "merged_by": "priya",
+    "base": "main", "head": "fix/PYL-300-app-reinstall",
+    "created_at": "2025-10-29T13:00:00Z", "merged_at": "2025-10-30T14:22:00Z",
+    "additions": 47, "deletions": 12, "files_changed": 3,
+    "reviewers": ["priya", "ravi"], "approvals": 2, "request_changes": 0,
+    "labels": ["bug", "switchyard", "urgent", "p1"],
+    "body": "Production fix for #44 / PYL-300. Webhook subscription was only registering on installation.created, not installation_repositories.added (the reinstall path). Adding handling for both events.\n\nBackfill plan: 11 affected customer orgs identified via missing-webhook-events query; will run backfill once this merges.",
+    "review_comments": [
+      { "author": "priya", "at": "2025-10-29T15:30:00Z", "body": "Test coverage on the new event branch?" },
+      { "author": "jordan", "at": "2025-10-29T16:00:00Z", "body": "Added in the test-only commit. Both events covered." }
+    ]
+  },
+  {
+    "number": 22, "title": "feat(switchyard): GitLab webhook ingest",
+    "state": "merged", "author": "jordan", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-206-gitlab-ingest",
+    "created_at": "2025-11-12T10:00:00Z", "merged_at": "2025-11-21T16:00:00Z",
+    "additions": 538, "deletions": 23, "files_changed": 11,
+    "reviewers": ["priya", "wei", "ravi"], "approvals": 3, "request_changes": 1,
+    "labels": ["switchyard", "gitlab", "feature"],
+    "body": "Implements PYL-206. Adds /webhooks/gitlab endpoint, HMAC-SHA256 verification, normalization to internal WebhookEvent shape via the Switchyard adapter.\n\nDesign trade-off: keeping the GitLab and GitHub adapters as separate modules (rather than a unified abstraction). Rationale in the design doc (#56). Per-vendor logic ends up small and the dispatch is clear.",
+    "review_comments": [
+      { "author": "ravi", "at": "2025-11-15T11:11:00Z", "body": "Nit: GitLab's webhook signature header is `X-Gitlab-Token`, not `X-Hub-Signature` like GitHub. Easy to miss. Make sure we're calling out the difference clearly somewhere people will look in 6 months." },
+      { "author": "jordan", "at": "2025-11-16T09:30:00Z", "body": "Added a docstring callout in webhook.py + a docs/architecture.md note. Good catch." },
+      { "author": "wei", "at": "2025-11-19T14:22:00Z", "body": "Requested-changes on the Beacon side: the normalized event omits the GitLab project_id field which we'll need later for per-project rule scoping. Adding it now is cheaper than adding it later." },
+      { "author": "jordan", "at": "2025-11-20T10:00:00Z", "body": "Added project_id to the normalized event + tests. Wei, ready for re-review." },
+      { "author": "wei", "at": "2025-11-20T11:30:00Z", "body": "Approved." }
+    ]
+  },
+  {
+    "number": 25, "title": "feat(switchyard): GitLab MR comment poster",
+    "state": "merged", "author": "jordan", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-207-gitlab-comments",
+    "created_at": "2025-11-30T09:00:00Z", "merged_at": "2025-12-05T15:30:00Z",
+    "additions": 287, "deletions": 14, "files_changed": 6,
+    "reviewers": ["priya", "ravi"], "approvals": 2, "request_changes": 0,
+    "labels": ["switchyard", "gitlab", "feature"],
+    "body": "PYL-207. Posts Pylon's findings as MR comments via GitLab's API. In-line for line-specific findings, summary at MR top for non-line findings.",
+    "review_comments": [
+      { "author": "priya", "at": "2025-12-02T11:00:00Z", "body": "GitLab's discussion / note model is different enough that I want a line-level comment in the code explaining the mapping. Future readers will appreciate." },
+      { "author": "jordan", "at": "2025-12-03T13:00:00Z", "body": "Added a 12-line docstring on the post_mr_note helper explaining the mental model. PTAL." }
+    ]
+  },
+  {
+    "number": 28, "title": "feat(switchyard): GitLab OAuth + token refresh",
+    "state": "merged", "author": "ravi", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-208-gitlab-oauth",
+    "created_at": "2025-12-01T10:00:00Z", "merged_at": "2025-12-05T17:00:00Z",
+    "additions": 311, "deletions": 7, "files_changed": 5,
+    "reviewers": ["priya", "jordan"], "approvals": 2, "request_changes": 0,
+    "labels": ["switchyard", "gitlab", "auth"],
+    "body": "PYL-208. GitLab Cloud OAuth integration. Token + refresh persisted (encrypted at rest). Auto-refresh 10min before expiry. Sentry alert on persistent refresh failure (3+ in a row). Customer-facing 'reconnect' banner if we permanently lose access.",
+    "review_comments": [
+      { "author": "jordan", "at": "2025-12-03T14:00:00Z", "body": "Make sure the refresh-failure alert is loud — silent refresh failure means the customer's analyzer goes dark and they won't notice for hours." },
+      { "author": "ravi", "at": "2025-12-04T09:30:00Z", "body": "Sentry alert + customer banner both wired. Tested by manually invalidating a refresh token in staging." }
+    ]
+  },
+  {
+    "number": 31, "title": "feat(infra): audit log event schema + ingest",
+    "state": "merged", "author": "ravi", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-217-audit-schema",
+    "created_at": "2025-12-15T10:00:00Z", "merged_at": "2025-12-19T16:30:00Z",
+    "additions": 401, "deletions": 0, "files_changed": 8,
+    "reviewers": ["priya", "tomas"], "approvals": 2, "request_changes": 0,
+    "labels": ["infra", "audit", "compliance"],
+    "body": "PYL-217. audit_log table (append-only via Postgres role permissions, not just convention). Ingest function emit_audit_event() callable from any service. PII sanitization for rule diff content.\n\nRefs design discussion in #88.",
+    "review_comments": [
+      { "author": "priya", "at": "2025-12-17T11:11:00Z", "body": "Postgres-level append-only is the right call. App-role can't UPDATE/DELETE; only DBA role can mutate. SOC 2 will love this." },
+      { "author": "tomas", "at": "2025-12-18T15:00:00Z", "body": "Sanitization regex review: looks correct. One thing — the rule ID itself is kept raw, which is fine for PII (rule IDs are never sensitive) but worth a doc-comment so future readers don't 'fix' it." }
+    ]
+  },
+  {
+    "number": 35, "title": "fix(tower): cycle-time chart shows actual time for self-reviews",
+    "state": "merged", "author": "camille", "merged_by": "priya",
+    "base": "main", "head": "fix/PYL-301-cycle-time-self-review",
+    "created_at": "2025-12-10T11:00:00Z", "merged_at": "2025-12-15T15:00:00Z",
+    "additions": 28, "deletions": 14, "files_changed": 2,
+    "reviewers": ["priya"], "approvals": 1, "request_changes": 0,
+    "labels": ["bug", "tower"],
+    "body": "PYL-301. Cycle-time was excluding 'self-reviews' (PR author == merger) which made the chart show 0h for repos with single-developer history. The exclusion was added on a hunch and never validated; removing.\n\nRecomputed last 90 days for affected customers.",
+    "review_comments": [
+      { "author": "priya", "at": "2025-12-12T09:30:00Z", "body": "LGTM. Recomputation backfill plan?" },
+      { "author": "camille", "at": "2025-12-12T10:00:00Z", "body": "Backfill script in #36; running once this merges." }
+    ]
+  },
+  {
+    "number": 41, "title": "chore(deps): FastAPI 0.110 → 0.115",
+    "state": "merged", "author": "ravi", "merged_by": "ravi",
+    "base": "main", "head": "chore/fastapi-0.115",
+    "created_at": "2025-12-23T10:00:00Z", "merged_at": "2026-01-02T13:00:00Z",
+    "additions": 19, "deletions": 11, "files_changed": 4,
+    "reviewers": ["priya"], "approvals": 1, "request_changes": 0,
+    "labels": ["chore", "deps"],
+    "body": "PYL-400. FastAPI bump. One Pydantic schema needed `model_validator` rename (was using deprecated `validator`). Tests passing.",
+    "review_comments": [
+      { "author": "priya", "at": "2025-12-29T14:00:00Z", "body": "Approved. Self-merge fine for deps bumps." }
+    ]
+  },
+  {
+    "number": 47, "title": "feat(beacon): marketplace data model + Postgres schema",
+    "state": "merged", "author": "hugo", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-200-marketplace-schema",
+    "created_at": "2026-01-08T10:00:00Z", "merged_at": "2026-01-16T17:30:00Z",
+    "additions": 224, "deletions": 0, "files_changed": 6,
+    "reviewers": ["wei", "ravi", "priya"], "approvals": 3, "request_changes": 0,
+    "labels": ["beacon", "marketplace"],
+    "body": "PYL-200. marketplace_rules, marketplace_rule_versions, marketplace_subscriptions tables. JSONB rule content. Soft delete. Semver enforcement.\n\nDesign discussion in #112.",
+    "review_comments": [
+      { "author": "ravi", "at": "2026-01-13T11:00:00Z", "body": "Migration runs in ~12s on staging with empty tables; should be fine in prod. Including a pre-migration row count check just in case." },
+      { "author": "wei", "at": "2026-01-14T13:00:00Z", "body": "Index on (rule_id, version) — make sure it's a non-unique covering index. Subscribers will query by rule_id and pull all versions." }
+    ]
+  },
+  {
+    "number": 52, "title": "feat(dashboard): audit log UI for Business+ tier",
+    "state": "merged", "author": "camille", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-218-audit-log-ui",
+    "created_at": "2026-01-22T10:00:00Z", "merged_at": "2026-01-30T15:00:00Z",
+    "additions": 478, "deletions": 12, "files_changed": 9,
+    "reviewers": ["kai", "tomas"], "approvals": 2, "request_changes": 1,
+    "labels": ["dashboard", "audit"],
+    "body": "PYL-218. /settings/audit-log route, gated to Business+. Filters by event type, actor, date. Pagination cursor-based. Diff inline if <5 lines, click-to-expand otherwise.\n\nBREAKING: Finding.severity enum normalized in this same release. See migration guide.",
+    "review_comments": [
+      { "author": "kai", "at": "2026-01-25T11:00:00Z", "body": "The expanded diff view jitters on first render — looks like the height isn't reserved before content loads. Layout shift will annoy keyboard users." },
+      { "author": "camille", "at": "2026-01-26T14:00:00Z", "body": "Reserved min-height on the diff container. Fixed in latest." },
+      { "author": "tomas", "at": "2026-01-29T10:00:00Z", "body": "Approving. Nice work on the cursor pagination." }
+    ]
+  },
+  {
+    "number": 58, "title": "fix(rules): scope python.bare-except out of test paths",
+    "state": "merged", "author": "hugo", "merged_by": "wei",
+    "base": "main", "head": "fix/PYL-302-bare-except-tests",
+    "created_at": "2026-01-09T11:00:00Z", "merged_at": "2026-01-13T11:30:00Z",
+    "additions": 34, "deletions": 5, "files_changed": 3,
+    "reviewers": ["wei"], "approvals": 1, "request_changes": 0,
+    "labels": ["beacon", "rules", "bug"],
+    "body": "PYL-302. Arcola Studios reported false positives. Default scoping now skips tests/, conftest.py, test_*.py, *_test.py. Customers can override via config.\n\nAlso added the _is_test_path helper to be reused across all rules — print-in-prod, todo-without-author, bare-mutex, async-without-await all use it.",
+    "review_comments": []
+  },
+  {
+    "number": 62, "title": "feat(beacon): Beacon Rule Marketplace public preview",
+    "state": "merged", "author": "wei", "merged_by": "marcus",
+    "base": "main", "head": "feat/marketplace-public-preview",
+    "created_at": "2026-03-22T11:00:00Z", "merged_at": "2026-03-29T21:10:00Z",
+    "additions": 1247, "deletions": 38, "files_changed": 27,
+    "reviewers": ["priya", "marcus", "tomas"], "approvals": 3, "request_changes": 0,
+    "labels": ["beacon", "marketplace", "feature", "release"],
+    "body": "PYL-100. Beacon Rule Marketplace public preview launch. Aggregates several merged-feature branches (PYL-200 through PYL-205).\n\nLaunch coordinated with Marketing (PYL-205) — blog post drafted, HN post timed for 9am PT, customer email scheduled. 23 published rules in first 4 days exceeds our internal 10-rule launch target.",
+    "review_comments": [
+      { "author": "marcus", "at": "2026-03-29T20:00:00Z", "body": "Final review pass. Looks great. Tagging v2.4.0 on merge." }
+    ]
+  },
+  {
+    "number": 65, "title": "feat(tower): team comparison data API",
+    "state": "merged", "author": "camille", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-213-team-compare-api",
+    "created_at": "2026-02-04T10:00:00Z", "merged_at": "2026-02-13T16:45:00Z",
+    "additions": 392, "deletions": 8, "files_changed": 7,
+    "reviewers": ["priya", "wei"], "approvals": 2, "request_changes": 0,
+    "labels": ["tower", "api"],
+    "body": "PYL-213. /api/v1/tower/team-comparison endpoint. Multi-team query against denormalized ClickHouse read model. Permissions filtering at query layer.\n\np95 466ms for 50-team / 90-day window in staging. Within target.",
+    "review_comments": [
+      { "author": "wei", "at": "2026-02-09T11:11:00Z", "body": "Permissions check at query layer is correct, but worth double-checking that the user's effective groups are resolved fresh from JWT claims, not from a cache that might be stale during the user's session." }
+    ]
+  },
+  {
+    "number": 68, "title": "fix(dashboard): audit log query streaming for >10k rows",
+    "state": "merged", "author": "tomas", "merged_by": "priya",
+    "base": "main", "head": "fix/PYL-303-audit-streaming",
+    "created_at": "2026-02-20T13:00:00Z", "merged_at": "2026-02-25T16:00:00Z",
+    "additions": 156, "deletions": 33, "files_changed": 5,
+    "reviewers": ["priya", "ravi"], "approvals": 2, "request_changes": 0,
+    "labels": ["dashboard", "audit", "bug", "performance"],
+    "body": "PYL-303. Stratosphere Robotics 30s timeout on 12-month filter (~150k rows). Added (org_id, event_type, created_at) covering index. Page-query window capped at 30 days; longer windows go through the export pipeline (background job).",
+    "review_comments": [
+      { "author": "ravi", "at": "2026-02-22T10:00:00Z", "body": "Per-org event-type indexes will help most customers; let's also watch the index size growth — for orgs with 7y retention this gets significant." }
+    ]
+  },
+  {
+    "number": 71, "title": "feat(switchyard): wire GitLab MR diffs into Beacon analyzer",
+    "state": "merged", "author": "jordan", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-209-gitlab-analyzer",
+    "created_at": "2026-03-04T10:00:00Z", "merged_at": "2026-03-13T16:45:00Z",
+    "additions": 167, "deletions": 11, "files_changed": 5,
+    "reviewers": ["priya", "wei"], "approvals": 2, "request_changes": 0,
+    "labels": ["beacon", "switchyard", "gitlab"],
+    "body": "PYL-209. GitLab MR open/update events now trigger the Beacon analyzer pipeline. p95 analyzer latency 78s on staging.",
+    "review_comments": []
+  },
+  {
+    "number": 74, "title": "feat(switchyard): GitLab merge-block enforcer",
+    "state": "merged", "author": "jordan", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-210-merge-block",
+    "created_at": "2026-04-04T10:00:00Z", "merged_at": "2026-04-11T14:00:00Z",
+    "additions": 244, "deletions": 9, "files_changed": 6,
+    "reviewers": ["priya", "tomas"], "approvals": 2, "request_changes": 0,
+    "labels": ["switchyard", "gitlab"],
+    "body": "PYL-210. Pylon registered as required status check on GitLab MRs. Customer-configurable: required vs informational. Override events logged in audit_log per Tomás's review feedback (#168).",
+    "review_comments": [
+      { "author": "tomas", "at": "2026-04-09T11:30:00Z", "body": "Audit-log integration on overrides looks great. Approved." }
+    ]
+  },
+  {
+    "number": 76, "title": "feat(beacon): first 10 async-correctness rules",
+    "state": "merged", "author": "hugo", "merged_by": "wei",
+    "base": "main", "head": "feat/PYL-222-async-rules-batch-1",
+    "created_at": "2026-04-01T11:00:00Z", "merged_at": "2026-04-12T16:30:00Z",
+    "additions": 1056, "deletions": 0, "files_changed": 23,
+    "reviewers": ["wei", "priya"], "approvals": 2, "request_changes": 0,
+    "labels": ["beacon", "rules", "python", "async"],
+    "body": "PYL-222. First 10 rules from the async-correctness rule pack: forgotten await, sync I/O in async, requests in async, blocking sleep, asyncio.gather exception handling, asyncio.create_task reference loss, etc. Each rule has 40+ test examples (20 TP / 20 FP).\n\nShadow-mode FP rate aggregate: 6.4% across 30 days of customer PR data. Below 8% threshold; promoting to default-on.",
+    "review_comments": [
+      { "author": "wei", "at": "2026-04-08T14:30:00Z", "body": "Excellent corpus quality. The TP examples for asyncio.gather-without-return-exceptions are particularly good — those are real customer bugs we've seen." }
+    ]
+  },
+  {
+    "number": 78, "title": "feat(dashboard): tower team-comparison dashboard UI",
+    "state": "merged", "author": "tomas", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-214-team-compare-ui",
+    "created_at": "2026-04-02T13:00:00Z", "merged_at": "2026-04-10T15:30:00Z",
+    "additions": 678, "deletions": 24, "files_changed": 14,
+    "reviewers": ["kai", "felix", "camille"], "approvals": 3, "request_changes": 0,
+    "labels": ["dashboard", "tower"],
+    "body": "PYL-214. Side-by-side dashboard for 2-4 teams. Three charts color-coded per team. Absolute / relative-delta toggle.\n\nDesign by Felix; backed by API from PYL-213.",
+    "review_comments": [
+      { "author": "felix", "at": "2026-04-05T11:00:00Z", "body": "Loving the relative-delta toggle placement. Felt natural in usability test." },
+      { "author": "kai", "at": "2026-04-08T13:30:00Z", "body": "Approved. The dense layout works at 4 teams; confirmed in QA." }
+    ]
+  },
+  {
+    "number": 80, "title": "fix(dashboard): marketplace publishing form on Safari",
+    "state": "merged", "author": "felix", "merged_by": "tomas",
+    "base": "main", "head": "fix/PYL-304-safari-publish-form",
+    "created_at": "2026-04-03T11:00:00Z", "merged_at": "2026-04-09T13:00:00Z",
+    "additions": 67, "deletions": 23, "files_changed": 3,
+    "reviewers": ["tomas"], "approvals": 1, "request_changes": 0,
+    "labels": ["dashboard", "bug", "safari"],
+    "body": "PYL-304. TanStack Form interaction with Safari's input event was clearing pasted content on first keystroke. Worked around with a controlled-input rewrite.",
+    "review_comments": []
+  },
+  {
+    "number": 82, "title": "fix(switchyard): GitLab MR comment idempotency",
+    "state": "merged", "author": "jordan", "merged_by": "priya",
+    "base": "main", "head": "fix/PYL-305-gitlab-dup-comments",
+    "created_at": "2026-04-17T10:00:00Z", "merged_at": "2026-04-22T15:33:00Z",
+    "additions": 124, "deletions": 11, "files_changed": 4,
+    "reviewers": ["priya", "wei", "ravi"], "approvals": 3, "request_changes": 0,
+    "labels": ["switchyard", "gitlab", "bug"],
+    "body": "PYL-305 fix. Verdant Energy pilot reported duplicate Pylon comments on MR retry. GitLab Notes API doesn't have GitHub Reviews' built-in idempotency; we now fetch existing notes and dedupe by stable hash (rule_id + file + line + commit_sha) before posting.",
+    "review_comments": [
+      { "author": "wei", "at": "2026-04-20T14:00:00Z", "body": "Hash includes commit_sha — good. Means a re-analyze on a new commit doesn't dedupe-out comments that should reflect the new state." },
+      { "author": "ravi", "at": "2026-04-21T09:00:00Z", "body": "Approved. Worth adding a metric for 'idempotency hit count' so we can monitor how often this fires." }
+    ]
+  },
+  {
+    "number": 84, "title": "fix(switchyard): auto-rotate GitHub App signing key via JWKS",
+    "state": "merged", "author": "ravi", "merged_by": "priya",
+    "base": "main", "head": "fix/PYL-306-jwks-auto-rotate",
+    "created_at": "2026-04-22T10:00:00Z", "merged_at": "2026-04-23T14:17:00Z",
+    "additions": 198, "deletions": 6, "files_changed": 4,
+    "reviewers": ["priya", "jordan"], "approvals": 2, "request_changes": 0,
+    "labels": ["switchyard", "security", "p1", "incident-fix"],
+    "body": "PYL-306. Production fix. GitHub rotated their App signing key per 90-day policy; we had hardcoded the previous key, causing ~40% webhook failure for ~90 minutes on 2026-04-22.\n\nNow fetches the current key set from GitHub's JWKS endpoint on a 12h refresh cycle, falls back to cached key on transient fetch failures.",
+    "review_comments": [
+      { "author": "priya", "at": "2026-04-23T11:00:00Z", "body": "Postmortem doc filed: docs/postmortems/2026-04-22-github-jwks.md. The 'we hardcoded a rotating key' framing is in there. Approved this fix." }
+    ]
+  },
+  {
+    "number": 26, "title": "feat(beacon): per-rule fire rate visibility",
+    "state": "merged", "author": "tomas", "merged_by": "priya",
+    "base": "main", "head": "feat/PYL-224-rule-fire-rate",
+    "created_at": "2026-02-19T10:00:00Z", "merged_at": "2026-02-27T15:00:00Z",
+    "additions": 89, "deletions": 14, "files_changed": 4,
+    "reviewers": ["camille"], "approvals": 1, "request_changes": 0,
+    "labels": ["beacon", "dashboard"],
+    "body": "PYL-224. Customer ask (Stratosphere). Rules listing now shows fire rate per rule (last 30 days). Sortable. 'Tune this rule' link if FR > 15%.",
+    "review_comments": []
+  },
+  {
+    "number": 30, "title": "feat(switchyard): customizable status check name",
+    "state": "merged", "author": "jordan", "merged_by": "tomas",
+    "base": "main", "head": "feat/PYL-225-status-check-name",
+    "created_at": "2026-03-21T11:00:00Z", "merged_at": "2026-03-27T16:00:00Z",
+    "additions": 41, "deletions": 8, "files_changed": 3,
+    "reviewers": ["tomas"], "approvals": 1, "request_changes": 0,
+    "labels": ["switchyard", "ci"],
+    "body": "PYL-225. Customers (Kaltsworth Logistics + 3 others) can now customize the Pylon status check name. Default 'Pylon'.",
+    "review_comments": []
+  },
+  {
+    "number": 33, "title": "chore(infra): pgvector 0.5 → 0.7",
+    "state": "merged", "author": "ravi", "merged_by": "ravi",
+    "base": "main", "head": "chore/pgvector-0.7",
+    "created_at": "2026-02-05T10:00:00Z", "merged_at": "2026-02-12T15:00:00Z",
+    "additions": 14, "deletions": 8, "files_changed": 3,
+    "reviewers": ["priya"], "approvals": 1, "request_changes": 0,
+    "labels": ["chore", "deps", "infra"],
+    "body": "PYL-401. pgvector minor bump. Used for Beacon similarity search (rule deduplication).",
+    "review_comments": []
+  },
+  {
+    "number": 39, "title": "chore(security): quarterly secrets rotation",
+    "state": "merged", "author": "ravi", "merged_by": "priya",
+    "base": "main", "head": "chore/q1-2026-secrets-rotation",
+    "created_at": "2026-03-17T09:00:00Z", "merged_at": "2026-03-23T17:00:00Z",
+    "additions": 18, "deletions": 18, "files_changed": 8,
+    "reviewers": ["priya"], "approvals": 1, "request_changes": 0,
+    "labels": ["security", "secrets"],
+    "body": "PYL-402. Standard quarterly rotation: AWS service-account keys, Datadog, Sentry, Postgres replication, internal HMAC. SOC 2 evidence updated. No service interruption.",
+    "review_comments": []
+  },
+  {
+    "number": 51, "title": "test(rules): expand bare-except + print-in-prod corpus",
+    "state": "merged", "author": "wei", "merged_by": "hugo",
+    "base": "main", "head": "test/expand-rule-corpus",
+    "created_at": "2026-01-26T10:00:00Z", "merged_at": "2026-01-29T16:00:00Z",
+    "additions": 234, "deletions": 0, "files_changed": 6,
+    "reviewers": ["hugo"], "approvals": 1, "request_changes": 0,
+    "labels": ["test", "beacon", "rules"],
+    "body": "Adding 30 more test cases each for bare-except and print-in-prod rules. Pulled from real customer PRs (anonymized). Closes a small calibration gap.",
+    "review_comments": []
+  },
+  {
+    "number": 55, "title": "docs(architecture): document Switchyard adapter pattern",
+    "state": "merged", "author": "esther", "merged_by": "priya",
+    "base": "main", "head": "docs/switchyard-adapter-pattern",
+    "created_at": "2026-02-04T13:00:00Z", "merged_at": "2026-02-09T15:00:00Z",
+    "additions": 187, "deletions": 0, "files_changed": 1,
+    "reviewers": ["jordan", "priya"], "approvals": 2, "request_changes": 0,
+    "labels": ["docs"],
+    "body": "Documenting the Switchyard adapter pattern (one module per vendor, normalized event shape). Cross-referenced from PYL-206 design doc.",
+    "review_comments": []
+  },
+  {
+    "number": 60, "title": "feat(beacon): marketplace rule subscription flow",
+    "state": "merged", "author": "tomas", "merged_by": "priya",
+    "base": "feat/marketplace-public-preview", "head": "feat/PYL-202-subscribe",
+    "created_at": "2026-02-19T11:00:00Z", "merged_at": "2026-02-27T15:10:00Z",
+    "additions": 312, "deletions": 4, "files_changed": 8,
+    "reviewers": ["camille", "wei"], "approvals": 2, "request_changes": 0,
+    "labels": ["dashboard", "marketplace"],
+    "body": "PYL-202. Subscribe button + integration mode selector. Subscription persisted, audit log entry, customer's pylon.yaml auto-updated via PR.",
+    "review_comments": [
+      { "author": "tom", "at": "2026-02-25T09:00:00Z", "body": "From CS perspective: please make sure the subscription confirmation email links to the rule's docs page. Subscribers always ask 'wait, what does this rule do?' a week later." },
+      { "author": "tomas", "at": "2026-02-26T10:00:00Z", "body": "Email template links to rule docs ✅" }
+    ]
+  },
+  {
+    "number": 64, "title": "feat(beacon): marketplace rule version semver auto-update",
+    "state": "merged", "author": "hugo", "merged_by": "wei",
+    "base": "feat/marketplace-public-preview", "head": "feat/PYL-203-rule-versioning",
+    "created_at": "2026-03-04T10:00:00Z", "merged_at": "2026-03-13T14:20:00Z",
+    "additions": 167, "deletions": 12, "files_changed": 5,
+    "reviewers": ["wei"], "approvals": 1, "request_changes": 0,
+    "labels": ["beacon", "marketplace"],
+    "body": "PYL-203. Minor/patch auto-applies. Major requires manual confirmation. Customer can pin to specific version. Changelog rendered on rule detail page.",
+    "review_comments": []
+  },
+  {
+    "number": 67, "title": "feat(dashboard): marketplace browse UI",
+    "state": "merged", "author": "tomas", "merged_by": "priya",
+    "base": "feat/marketplace-public-preview", "head": "feat/PYL-204-marketplace-browse",
+    "created_at": "2026-03-19T10:00:00Z", "merged_at": "2026-03-27T17:00:00Z",
+    "additions": 542, "deletions": 18, "files_changed": 12,
+    "reviewers": ["kai", "felix"], "approvals": 2, "request_changes": 0,
+    "labels": ["dashboard", "marketplace"],
+    "body": "PYL-204. Browse-and-search UI for marketplace. Filters (language, category, publisher, license), search, sort, detail page per rule.",
+    "review_comments": [
+      { "author": "felix", "at": "2026-03-25T13:00:00Z", "body": "Approved. The dense 5-column grid feels right at this scale." }
+    ]
+  },
+  {
+    "number": 79, "title": "WIP: feat(beacon): permissions for tower team comparison",
+    "state": "open", "author": "camille",
+    "base": "main", "head": "feat/PYL-215-team-compare-permissions",
+    "created_at": "2026-04-15T10:00:00Z",
+    "additions": 287, "deletions": 12, "files_changed": 7,
+    "reviewers": ["wei", "priya"], "approvals": 0, "request_changes": 1,
+    "labels": ["dashboard", "tower", "permissions", "wip"],
+    "body": "PYL-215. SAML group resolution + native team-membership for non-SAML orgs. Graceful degradation if user loses access mid-session.\n\nOpen review feedback: SAML group resolution caching strategy is being iterated. Will update when settled.",
+    "review_comments": [
+      { "author": "wei", "at": "2026-04-21T14:00:00Z", "body": "Let's pull SAML group resolution out of this PR into a separate component — the auth surface in this PR is getting wide. Same change in code; cleaner review." },
+      { "author": "camille", "at": "2026-04-21T16:00:00Z", "body": "Splitting now. Will close this and open two narrower PRs." }
+    ]
+  }
+]

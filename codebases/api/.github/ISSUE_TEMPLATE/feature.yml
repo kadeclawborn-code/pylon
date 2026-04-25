@@ -1,0 +1,39 @@
+name: Feature request
+description: Propose a new capability for the Pylon API
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Lead with the customer pain. Don't propose a solution yet.
+    validations:
+      required: true
+  - type: textarea
+    id: who
+    attributes:
+      label: Who experiences this?
+      description: Customer roles, internal teams. Be specific.
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: How is this handled today?
+      description: Workarounds, manual steps, missing capabilities.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach (rough)
+      description: Optional. The proposal will be shaped by Olivia / product before implementation.
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Suspected scope
+      options:
+        - small (≤1 sprint)
+        - medium (1-3 sprints)
+        - large (full epic)
+        - unclear (needs spike)
