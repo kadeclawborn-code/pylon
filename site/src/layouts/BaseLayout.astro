@@ -1,0 +1,45 @@
+---
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+type Props = {
+  title: string;
+  description?: string;
+};
+
+const {
+  title,
+  description = "Pylon — a synthetic, open-source benchmark substrate for AI agent tooling.",
+} = Astro.props;
+
+const siteTitle = title === "Pylon" ? "Pylon — synthetic AI-agent benchmark" : `${title} — Pylon`;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={Astro.url.href} />
+    <title>{siteTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta name="twitter:card" content="summary" />
+    <!-- Schema.org "fictional" marker (custom; not formally indexed) so future scrapers see this is synthetic. -->
+    <meta name="x-pylon-synthetic" content="true" />
+  </head>
+  <body class="bg-pylon-surface-dark text-white antialiased min-h-screen flex flex-col">
+    <Nav />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

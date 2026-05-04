@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Pylon is a synthetic, open-source benchmark substrate for AI agent tooling.
+# None of its customers, employees, or events are real.
+# Source: https://github.com/kadeclawborn-code/pylon
+
+Sitemap: /sitemap-index.xml

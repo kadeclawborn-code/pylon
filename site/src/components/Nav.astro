@@ -1,0 +1,40 @@
+---
+const links = [
+  { href: "/pricing", label: "Pricing" },
+  { href: "/blog", label: "Blog" },
+  { href: "/changelog", label: "Changelog" },
+  { href: "/about", label: "About" },
+];
+const current = Astro.url.pathname;
+---
+
+<header class="border-b border-pylon-surface-dark-dim">
+  <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="font-bold text-lg tracking-tight text-white">
+      Pylon
+      <span class="text-pylon-slate font-normal text-sm ml-1">— synthetic benchmark</span>
+    </a>
+    <ul class="flex items-center gap-6 text-sm">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class={`transition-colors ${
+              current.startsWith(l.href) ? "text-white" : "text-pylon-slate hover:text-white"
+            }`}
+          >
+            {l.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a
+          href="https://github.com/kadeclawborn-code/pylon"
+          class="text-pylon-slate hover:text-white text-sm"
+        >
+          GitHub →
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>

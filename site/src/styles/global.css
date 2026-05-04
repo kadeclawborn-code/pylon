@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    line-height: 1.6;
+  }
+  .prose-pylon {
+    @apply max-w-none text-pylon-slate;
+  }
+  .prose-pylon h1,
+  .prose-pylon h2,
+  .prose-pylon h3,
+  .prose-pylon h4 {
+    @apply text-white font-semibold;
+  }
+  .prose-pylon h1 {
+    @apply text-3xl mt-12 mb-4;
+  }
+  .prose-pylon h2 {
+    @apply text-2xl mt-10 mb-3;
+  }
+  .prose-pylon h3 {
+    @apply text-lg mt-8 mb-2;
+  }
+  .prose-pylon p {
+    @apply my-4;
+  }
+  .prose-pylon ul,
+  .prose-pylon ol {
+    @apply my-4 pl-6;
+  }
+  .prose-pylon ul {
+    @apply list-disc;
+  }
+  .prose-pylon ol {
+    @apply list-decimal;
+  }
+  .prose-pylon li {
+    @apply my-1;
+  }
+  .prose-pylon a {
+    @apply text-white underline underline-offset-2 hover:text-pylon-amber;
+  }
+  .prose-pylon code {
+    @apply font-mono text-sm bg-pylon-surface-dark-dim px-1 py-0.5 rounded text-white;
+  }
+  .prose-pylon pre {
+    @apply bg-pylon-surface-dark-dim p-4 rounded my-4 overflow-x-auto text-sm;
+  }
+  .prose-pylon pre code {
+    @apply bg-transparent p-0;
+  }
+  .prose-pylon strong {
+    @apply text-white font-semibold;
+  }
+  .prose-pylon table {
+    @apply w-full my-6 text-sm;
+  }
+  .prose-pylon th {
+    @apply text-left text-white border-b border-pylon-surface-dark-dim pb-2 px-3;
+  }
+  .prose-pylon td {
+    @apply border-b border-pylon-surface-dark-dim py-2 px-3;
+  }
+  .prose-pylon hr {
+    @apply border-pylon-surface-dark-dim my-8;
+  }
+}

@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Change-log entries pulled from the canonical CHANGELOG.md in codebases/api/.
+// MVP renders a curated subset inline; future improvement: load + render the
+// markdown file directly via Astro content collections.
+
+const releases = [
+  {
+    version: "2.4.2",
+    date: "2026-04-23",
+    sections: [
+      { kind: "Fixed", items: ["Switchyard webhook signature verification now auto-rotates GitHub App keys via JWKS (PYL-306)."] },
+    ],
+  },
+  {
+    version: "2.4.1",
+    date: "2026-04-09",
+    sections: [
+      { kind: "Fixed", items: ["Marketplace publishing form description field on Safari (PYL-304)."] },
+    ],
+  },
+  {
+    version: "2.4.0",
+    date: "2026-03-29",
+    sections: [
+      { kind: "Added", items: [
+        "Beacon Rule Marketplace public preview (PYL-100). Customers can publish custom rules and subscribe to others.",
+        "Per-rule fire rate visibility on the rules listing page (PYL-224).",
+        "Pylon CI status check name customization (PYL-225).",
+      ] },
+      { kind: "Changed", items: [
+        "Audit log queries now stream for >10k rows (PYL-303). Page-query window capped at 30 days.",
+      ] },
+    ],
+  },
+  {
+    version: "2.3.0",
+    date: "2026-03-15",
+    sections: [
+      { kind: "Added", items: [
+        "Audit logs (PYL-103) — Business+ tier. 1y retention on Business, 7y on Enterprise.",
+        "CSV / JSON export.",
+        "SOC 2 Type II evidence query API stub.",
+      ] },
+    ],
+  },
+  {
+    version: "2.2.0",
+    date: "2026-03-13",
+    sections: [
+      { kind: "Added", items: [
+        "GitLab MR analyzer pipeline integration (PYL-209).",
+        "GitLab merge-block enforcer in review (PYL-210).",
+      ] },
+    ],
+  },
+  {
+    version: "2.0.0",
+    date: "2026-01-30",
+    sections: [
+      { kind: "Added", items: ["Audit log UI for Business+ tier (PYL-218)."] },
+      { kind: "Changed", items: ["BREAKING: Finding.severity enum normalized to info | low | medium | high | blocking."] },
+    ],
+  },
+];
+---
+
+<BaseLayout title="Changelog" description="Pylon API release history.">
+  <section class="max-w-3xl mx-auto px-6 pt-16 pb-16 prose-pylon">
+    <h1>Changelog</h1>
+    <p>
+      Notable changes to <code>pylon-api</code>. Format follows <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>; versioning per <a href="https://semver.org/">SemVer</a>. Source: <a href="https://github.com/kadeclawborn-code/pylon/blob/main/codebases/api/CHANGELOG.md">codebases/api/CHANGELOG.md</a>.
+    </p>
+
+    {releases.map((r) => (
+      <section class="border-t border-pylon-surface-dark-dim pt-8">
+        <h2 class="!mb-1">{r.version}</h2>
+        <p class="text-pylon-slate font-mono text-sm !mt-0 !mb-4">{r.date}</p>
+        {r.sections.map((s) => (
+          <>
+            <h3>{s.kind}</h3>
+            <ul>
+              {s.items.map((i) => <li>{i}</li>)}
+            </ul>
+          </>
+        ))}
+      </section>
+    ))}
+
+    <p class="text-pylon-slate text-sm">
+      Earlier history (versions 1.0 – 1.5) lives in the <code>pre-2025-q4</code> archive branch.
+    </p>
+  </section>
+</BaseLayout>

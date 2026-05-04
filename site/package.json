@@ -1,0 +1,24 @@
+{
+  "name": "pylon-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The Pylon benchmark site — Astro-rendered projection of the Pylon synthetic-company source-of-truth markdown.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.2",
+    "@astrojs/mdx": "^3.1.7",
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^4.16.7",
+    "tailwindcss": "^3.4.13"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5"
+  }
+}

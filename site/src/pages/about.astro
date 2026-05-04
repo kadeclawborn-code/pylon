@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SyntheticDisclaimer from "../components/SyntheticDisclaimer.astro";
+---
+
+<BaseLayout title="About" description="What Pylon is, why it exists, who built it.">
+  <article class="max-w-3xl mx-auto px-6 pt-16 pb-12 prose-pylon">
+    <h1>About Pylon</h1>
+
+    <SyntheticDisclaimer mode="prominent" />
+
+    <h2>What this is</h2>
+
+    <p>
+      Pylon is a fictional B2B SaaS company. The fictional company "sells" a PR review automation product called Pylon — Series B, $35M raised, ~70 employees, ~250 paying customers across mid-market software teams. None of that is real. All of it is plausible enough that an LLM reasons about it as a coherent enterprise.
+    </p>
+
+    <p>
+      The repo at <a href="https://github.com/kadeclawborn-code/pylon">github.com/kadeclawborn-code/pylon</a> contains the source-of-truth artifacts: identity, brand, org chart, product PRD, roadmap, pricing, 45 ticket fixtures, a runnable FastAPI codebase with 6 months of synthetic git history, 50 GitHub-style issues, 31 PRs with realistic review threads, 7 paying customer accounts, 30 user personas, 15 multi-turn support conversations, 10 customer-facing help articles. Every artifact cross-references every other artifact.
+    </p>
+
+    <h2>Why this exists</h2>
+
+    <p>
+      The hardest thing about enterprise AI agents is that real enterprise reasoning is multi-system. An agent classifying a bug needs to understand which component owns it, who's worked on it recently, what the team's current priorities are, whether there's a related customer thread, and whether a similar bug has fired before.
+    </p>
+
+    <p>
+      A demo against three disconnected mock tickets cannot teach an agent any of that. Pylon exists so an AI agent has the texture of a real company to reason across — without the legal and ethical mess of using a real customer's data.
+    </p>
+
+    <h2 id="built-by">Built by Bent Wire Studio</h2>
+
+    <p>
+      Pylon is built and maintained by <a href="https://github.com/kadeclawborn-code/bentwire">Bent Wire Studio</a>, a small studio shipping open-source AI prototypes and writing about what we learn. If Pylon is useful to your work, the longer-form thinking lives on the studio's <a href="https://medium.com/@kade-clawborn">Medium</a>. PRs welcome on the repo if you find a fixture that doesn't hold up under your testbed.
+    </p>
+
+    <h2>What this site is</h2>
+
+    <p>
+      This site is a <em>projection</em> of the synthetic company's source-of-truth markdown. Every page is generated from a file in the GitHub repo. When the source markdown changes, the site rebuilds. That's deliberate — it makes coherence a property of the system rather than something we have to remember to maintain.
+    </p>
+
+    <p>
+      The fictional company Pylon, LLC says it's at <code>pylon.dev</code>. This site lives at a different real URL we actually own. The fiction stays internally coherent within the artifacts; the real hosting is just the OSS project's deployment.
+    </p>
+
+    <h2>Honest limits</h2>
+
+    <ul>
+      <li>There is no signup. No login. No working dashboard. No working checkout.</li>
+      <li>The "customers" listed do not exist. The "employees" listed do not exist.</li>
+      <li>The product subsystems (Beacon, Tower, Switchyard) are described in canon but only one piece — the FastAPI service in <code>codebases/api/</code> — is actually runnable as code.</li>
+      <li>If you stumbled here looking for a real PR-review product: this isn't one. Sorry.</li>
+    </ul>
+
+    <h2>License</h2>
+
+    <p>
+      Apache 2.0. Use Pylon as a benchmark for AI agent tooling, a demo environment, internal training data, or anything else where a coherent fake company is more useful than a stub. Fork it, customize it, file issues if a fixture doesn't hold up under your testbed.
+    </p>
+  </article>
+</BaseLayout>

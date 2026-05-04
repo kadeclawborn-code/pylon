@@ -1,0 +1,23 @@
+---
+// Synthetic-disclaimer banner. Required on every page. Renders in two modes:
+// `compact` (footer / inline) and `prominent` (top-of-page, used on /about).
+type Props = { mode?: "compact" | "prominent" };
+const { mode = "compact" } = Astro.props;
+---
+
+{mode === "prominent" ? (
+  <aside class="border-l-4 border-pylon-amber bg-pylon-surface-dark-dim p-4 my-6 text-sm">
+    <p class="font-semibold text-pylon-amber mb-1">Synthetic — by design</p>
+    <p class="text-pylon-slate">
+      Pylon is a fictional B2B SaaS company. None of its customers, employees, or events are real.
+      This site renders the synthetic company as part of an open-source benchmark substrate for AI
+      agent tooling. Source: <a class="underline hover:text-white" href="https://github.com/kadeclawborn-code/pylon">github.com/kadeclawborn-code/pylon</a>.
+    </p>
+  </aside>
+) : (
+  <p class="text-xs text-pylon-slate">
+    Pylon is a synthetic, open-source benchmark substrate for AI agent tooling.
+    None of its customers, employees, or events are real.
+    Source: <a class="underline hover:text-white" href="https://github.com/kadeclawborn-code/pylon">github.com/kadeclawborn-code/pylon</a>.
+  </p>
+)}

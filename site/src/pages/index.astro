@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Pylon" description="Stop merging surprises. Pylon catches what review missed.">
+  <section class="max-w-5xl mx-auto px-6 pt-24 pb-16">
+    <p class="text-pylon-amber font-mono text-xs tracking-wider uppercase mb-4">Synthetic benchmark — not a real company</p>
+    <h1 class="text-5xl md:text-6xl font-bold text-white tracking-tight leading-tight mb-6">
+      Stop merging surprises.<br />
+      Pylon catches what review missed.
+    </h1>
+    <p class="text-lg text-pylon-slate max-w-2xl mb-10">
+      Pylon plugs into GitHub, GitLab, and Bitbucket Cloud. On every PR it runs a configurable battery of checks — lint rules, security scans, architectural-drift detectors — and surfaces the highest-leverage findings as in-line comments. Engineering managers get aggregate dashboards showing review quality and where humans repeatedly miss the same class of bug.
+    </p>
+    <div class="flex flex-wrap gap-4 text-sm">
+      <a href="/pricing" class="bg-pylon-blue text-white px-5 py-2 rounded font-semibold hover:bg-pylon-blue/90 transition-colors">See pricing</a>
+      <a href="https://github.com/kadeclawborn-code/pylon" class="border border-pylon-slate text-white px-5 py-2 rounded hover:border-white transition-colors">View source on GitHub →</a>
+    </div>
+  </section>
+
+  <section class="border-y border-pylon-surface-dark-dim bg-pylon-surface-dark-dim/40">
+    <div class="max-w-5xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-10">
+      <div>
+        <h3 class="text-white font-semibold mb-2">Beacon — the rule engine</h3>
+        <p class="text-pylon-slate text-sm">Static analysis with smart defaults plus custom rules that don't suck. Beacon's rule library covers Python, TypeScript, Go, JavaScript, Ruby — with Java and C# previews on the 2026 roadmap.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold mb-2">Tower — the analytics layer</h3>
+        <p class="text-pylon-slate text-sm">Cycle-time, review depth, hotspot maps, and the "who reviews what" graph. Calibrated metrics engineering leaders can take into a board conversation without hedging.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold mb-2">Switchyard — the integration layer</h3>
+        <p class="text-pylon-slate text-sm">Webhooks from GitHub, GitLab, Bitbucket Cloud. Comment posting. Merge-block enforcer. Auth and identity bridge. Three platforms, one mental model.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-6 py-16">
+    <h2 class="text-2xl text-white font-semibold mb-6">What this is</h2>
+    <div class="prose-pylon max-w-3xl">
+      <p>
+        Pylon is a fictional B2B SaaS company built as an open-source benchmark substrate for AI agent tooling. Most agent demos use disconnected fixtures — a few mock tickets, a stub repo, one sample customer chat — and that's why so many "agentic" projects collapse the moment they hit a real enterprise. There's no cross-system coherence in the test data, so the agent never learns to reason across one.
+      </p>
+      <p>
+        Pylon fills that gap. It models a real-feeling company across product, engineering, marketing, sales, support, finance, ops, and compliance — with the artifacts in each layer referring to each other consistently. Read the <a href="https://github.com/kadeclawborn-code/pylon/blob/main/BLUEPRINT.md">BLUEPRINT.md</a> for the full design, or the <a href="/about">about page</a> for why this exists at all.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

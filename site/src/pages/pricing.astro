@@ -1,0 +1,127 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const tiers = [
+  {
+    name: "Free",
+    price: "$0",
+    cadence: "",
+    summary: "For solo developers and small teams getting started.",
+    features: [
+      "Up to 5 active developers",
+      "Public repos only",
+      "Beacon — default rule pack",
+      "Tower — basic cycle-time view, 14-day history",
+      "Switchyard — GitHub Cloud only",
+      "Community support",
+    ],
+    cta: "Start on GitHub",
+    href: "https://github.com/kadeclawborn-code/pylon",
+  },
+  {
+    name: "Team",
+    price: "$29",
+    cadence: "/dev/month",
+    summary: "For engineering teams who want full Pylon on private repos.",
+    features: [
+      "Unlimited developers",
+      "Public + private repos",
+      "All Beacon default rules",
+      "Full Tower",
+      "Switchyard — GitHub, GitLab, Bitbucket Cloud",
+      "Email support",
+    ],
+    cta: "View on GitHub",
+    href: "https://github.com/kadeclawborn-code/pylon",
+  },
+  {
+    name: "Business",
+    price: "$59",
+    cadence: "/dev/month",
+    summary: "For organizations that need custom rules, SSO, and audit trails.",
+    features: [
+      "Everything in Team",
+      "Custom Beacon rules + Marketplace access",
+      "SAML SSO",
+      "Audit logs (1y retention)",
+      "Tower data API (read-only export)",
+      "Priority support",
+    ],
+    cta: "View on GitHub",
+    href: "https://github.com/kadeclawborn-code/pylon",
+    highlighted: true,
+  },
+  {
+    name: "Enterprise",
+    price: "Custom",
+    cadence: "",
+    summary: "For large organizations with compliance and contractual needs.",
+    features: [
+      "Everything in Business",
+      "SOC 2 Type II evidence portal",
+      "Dedicated CSM",
+      "Contractual SLAs",
+      "Single-tenant or on-prem deployment",
+      "EU data residency (Q1 2027)",
+    ],
+    cta: "Read the source",
+    href: "https://github.com/kadeclawborn-code/pylon/blob/main/product/pricing.md",
+  },
+];
+---
+
+<BaseLayout title="Pricing" description="Pylon plan tiers: Free, Team, Business, Enterprise.">
+  <section class="max-w-5xl mx-auto px-6 pt-16 pb-12">
+    <h1 class="text-3xl font-bold text-white mb-2">Pricing</h1>
+    <p class="text-pylon-slate max-w-2xl mb-12">
+      Per-developer pricing on paid plans. No seat minimums on Free or Team. All figures in USD.
+      Source: <a class="underline hover:text-white" href="https://github.com/kadeclawborn-code/pylon/blob/main/product/pricing.md">product/pricing.md</a>.
+    </p>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+      {tiers.map((t) => (
+        <div class={`rounded-lg border p-6 ${t.highlighted ? "border-pylon-blue bg-pylon-blue/10" : "border-pylon-surface-dark-dim"}`}>
+          <p class="text-pylon-slate text-sm font-mono uppercase tracking-wider mb-2">{t.name}</p>
+          <p class="text-4xl font-bold text-white mb-1">
+            {t.price}
+            <span class="text-sm font-normal text-pylon-slate">{t.cadence}</span>
+          </p>
+          <p class="text-sm text-pylon-slate mt-2 mb-4 min-h-[3rem]">{t.summary}</p>
+          <ul class="text-sm space-y-2 mb-6">
+            {t.features.map((f) => (
+              <li class="flex gap-2 text-pylon-slate">
+                <span class="text-pylon-green">✓</span>
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+          <a href={t.href} class="block text-center bg-pylon-surface-dark-dim text-white border border-pylon-slate rounded py-2 text-sm hover:border-white transition-colors">
+            {t.cta}
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <section class="prose-pylon">
+      <h2>FAQ — selected</h2>
+
+      <h3>What counts as an active developer?</h3>
+      <p>A developer is active in a billing month if they authored OR reviewed at least one PR in any repo connected to your Pylon org during that month. Lurkers, observers, and CI service accounts don't count.</p>
+
+      <h3>Annual discount?</h3>
+      <p>Yes — 15% off Team and Business when paid annually.</p>
+
+      <h3>Can I downgrade?</h3>
+      <p>Yes, at any billing-cycle boundary. Custom rules become read-only on Team; Tower data API access stops; SSO falls back to GitHub OAuth.</p>
+
+      <h3>Refund policy?</h3>
+      <p>Cancel any time. We refund the unused portion of any prepaid annual term, prorated to the day of cancellation. No retention escalation calls.</p>
+
+      <p>Full pricing FAQ in the <a href="https://github.com/kadeclawborn-code/pylon/blob/main/product/pricing.md">source pricing.md</a>.</p>
+
+      <p class="text-pylon-amber font-mono text-xs">
+        Reminder: Pylon is a synthetic benchmark. There is no checkout. The pricing above is the canonical fictional pricing — not a real offer.
+      </p>
+    </section>
+  </section>
+</BaseLayout>

@@ -1,0 +1,35 @@
+---
+import SyntheticDisclaimer from "./SyntheticDisclaimer.astro";
+---
+
+<footer class="border-t border-pylon-surface-dark-dim mt-24">
+  <div class="max-w-5xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-8 text-sm">
+    <div>
+      <p class="font-semibold text-white mb-3">Pylon</p>
+      <ul class="space-y-1 text-pylon-slate">
+        <li><a href="/pricing" class="hover:text-white">Pricing</a></li>
+        <li><a href="/changelog" class="hover:text-white">Changelog</a></li>
+        <li><a href="/about" class="hover:text-white">About</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-semibold text-white mb-3">Sources</p>
+      <ul class="space-y-1 text-pylon-slate">
+        <li><a href="https://github.com/kadeclawborn-code/pylon" class="hover:text-white">GitHub repo</a></li>
+        <li><a href="/about#built-by" class="hover:text-white">Built by Bent Wire Studio</a></li>
+        <li><a href="https://github.com/kadeclawborn-code/pylon/blob/main/BLUEPRINT.md" class="hover:text-white">BLUEPRINT.md (full design)</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-1">
+      <p class="font-semibold text-white mb-3">License</p>
+      <p class="text-pylon-slate">
+        Apache 2.0. Use Pylon as a benchmark for AI agent tooling, a demo environment, internal training data, or anything else where a coherent fake company is more useful than a stub.
+      </p>
+    </div>
+  </div>
+  <div class="border-t border-pylon-surface-dark-dim">
+    <div class="max-w-5xl mx-auto px-6 py-6">
+      <SyntheticDisclaimer mode="compact" />
+    </div>
+  </div>
+</footer>
